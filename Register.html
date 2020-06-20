@@ -1,0 +1,200 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Register Student</title>
+
+<link rel="stylesheet" href="index.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+let isValid=false;
+function loadDom(){
+	document.getElementById("firstName").style.display="none";
+	document.getElementById("lastname").style.display="none";
+	document.getElementById("email").style.display="none";
+	document.getElementById("password").style.display="none";
+	document.getElementById("cpassword").style.display="none";
+	document.getElementById("mobile").style.display="none";
+}
+function submitForm(){
+	if(isValid){
+	alert("Registeration Successful");
+		return true;
+	}
+	else{
+		alert("Please verify Form Details.");
+		return false;
+	}
+	
+}
+function selectGender(){
+	var select = document.getElementById("title").value;
+	if(select=="Mr." || select=="Master"){
+		document.getElementsByName("gender")[0].checked=true;
+	}
+	else{
+		document.getElementsByName("gender")[1].checked=true;
+	}
+
+}
+	function checkFirstName(){
+		var firstName = document.forms["regForm"]["fname"].value;
+		var letterReg = /^[A-Za-z]+$/;
+		var firstNameElement=document.getElementById("firstName");
+		if(letterReg.test(String(firstName))==false){
+			firstNameElement.innerHTML="Only Characters are allowed in first name,No special character,space and number.";
+			firstNameElement.style.display="block";
+			document.regForm.fname.focus();
+		}
+		else{
+			isValid=true;
+			firstNameElement.style.display="none";
+		}
+	}
+
+	
+	function checkLastName(){
+		var lastName = document.forms["regForm"]["lname"].value;
+		var letterReg = /^[A-Za-z]+$/;
+		var lastNameElement=document.getElementById("lastName");
+		if(letterReg.test(String(lastName))==false){
+			lastNameElement.innerHTML="Only Characters are allowed in last name,No special character,space and number.";
+			lastNameElement.style.display="block";
+			document.regForm.lname.focus();
+		}
+		else{
+			isValid=true;
+			lastNameElement.style.display="none";
+		}
+	}
+	function checkEmail(){
+		var email = document.forms["regForm"]["email"].value;
+		var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var emailElement=document.getElementById("email");
+		if(emailReg.test(String(email).toLowerCase()) == false){
+			emailElement.innerHTML="You have entered an invalid email address.";
+			emailElement.style.display="block";
+			document.regForm.email.focus();
+		}
+		else{
+			isValid=true;
+			emailElement.style.display="none";
+		}
+	}
+
+	function checkPassword(){
+		var password = document.forms["regForm"]["password"].value;
+		var passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+		var passwordElement=document.getElementById("password");
+
+		if (password.length<8 || passwordRegex.test(password.toString())==false) {	
+			passwordElement.innerHTML="Passowrd must contain a Lowercase and Uppercase Alphabets , Numerics and Special Characters and should have atleast 8 characters.";
+			passwordElement.style.display="block";
+			document.regForm.password.focus();
+		}
+		else{
+			isValid=true;
+			passwordElement.style.display="none";
+		}
+	}
+
+	function checkConfirmPassword(){
+		var password = document.forms["regForm"]["password"].value;
+		var confirmPassword = document.forms["regForm"]["cpassword"].value;
+		var confirmPasswordElement=document.getElementById("cpassword");
+
+		if (password.localeCompare(confirmPassword)!=0) {
+            confirmPasswordElement.innerHTML="Password and Confirm Password do not matched.";
+			confirmPasswordElement.style.display="block";
+            document.regForm.cpassword.focus();
+		}    
+		else{
+			isValid=true;
+			confirmPasswordElement.style.display="none";
+		}
+	}
+	function checkMobile(){
+		var mobile = document.forms["regForm"]["mobile"].value.toString();
+		var mobileElement=document.getElementById("mobile");
+		if(mobile.length<10 || mobile.length>10 || isNaN(mobile)){
+			mobileElement.innerHTML="Invalid Mobile Number.It should be of length 10.";
+			mobileElement.style.display="block";
+			document.regForm.mobile.focus();
+		}
+		else{
+			isValid=true;
+			mobileElement.style.display="none";
+		}
+	}
+</script>
+</head>
+<body onload="loadDom()">
+<div class="container">
+	<header class="jumbotron">
+		<h1>REGISTRATION FORM</h1>
+	</header>
+	<div class="form-login jumbotron ">
+		<form action="#" id="form" method="post" name="regForm" onsubmit="submitForm()">
+			<div class="form-inner">
+				<span class="form-label">Salutation*:</span> 
+				<select onchange="selectGender()" name="title" id="title" required>
+					<option value="Mr." selected>Mr.</option>
+					<option value="Mrs.">Mrs.</option>
+					<option value="Master">Master</option>
+					<option value="Miss">Miss</option>
+				</select>
+			</div>
+			
+			<div class="form-inner">
+				<span class="form-label">First Name: </span> 
+				<input type="text" placeholder="First Name"  onfocusout="checkFirstName()" name="fname" required>
+			</div>
+			<div class="form-inner error" id="firstName"></div>
+            <div class="form-inner">
+				<span class="form-label">Last Name: </span> <input type="text" placeholder="Last Name" onfocusout="checkLastName()"name="lname" required>
+            </div>
+            <div class="form-inner error" id="lastName"></div>
+            <div class="form-inner">
+                <span class="form-label">Gender: </span>
+               		<input type="radio" style="width: 40px" name="gender" disabled checked value="Male" > Male
+               		<input type="radio" style="width: 40px" name="gender" disabled value="Female" > Female
+            </div>
+            <div class="form-inner">
+            	<span class="form-label">Email: </span>
+				<input type="email" placeholder="Email" onfocusout="checkEmail()" name="email" required>
+				</div>
+				<div class="form-inner error" id="email"></div>
+            
+            <div class="form-inner">
+            	<span class="form-label">Password: </span>
+				<input type="password" placeholder="Password" onfocusout="checkPassword()"name="password" required>
+            </div>
+            <div class="form-inner error" id="password"></div>
+            <div class="form-inner">
+            	<span class="form-label">Confirm Password: </span>
+				<input type="password" placeholder="Confirm Password" oninput="checkConfirmPassword()" name="cpassword" required>
+            </div>
+            <div class="form-inner error" id="cpassword"></div>
+            <div class="form-inner">
+            	<span class="form-label">Mobile: </span>
+				 <input type="number" placeholder="Contact No" onfocusout="checkMobile()" name="mobile" required><br>
+            </div>
+            <div class="form-inner error" id="mobile"></div>
+          	<input type="submit" value="Register" name="submit" class="btn btn-primary">
+          	<input type="reset" value="Reset" id="reset" class="btn btn-primary">
+        </form>
+        <div>
+        	<a href="#">Already Registered?Login Now.</a>
+        </div>
+	</div>
+</div>
+
+
+        
+       
+</body>
+</html>

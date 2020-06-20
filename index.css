@@ -1,0 +1,27 @@
+header h1 {
+	text-align: center;
+}
+
+.form-login {
+	text-align: center;
+}
+
+.form-login label {
+	margin: 10px 0;
+}
+
+ .form-inner {
+ 	margin: 10px 0;
+ }
+
+.form-login a {
+	float: right;
+}
+
+span {
+	display: inline-block;
+	width: 100px;
+}
+.error{
+	color: red;
+}
